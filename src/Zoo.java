@@ -1,8 +1,11 @@
+import animal.Animals;
+import animal.Giraffe;
+import animal.SouthernFlyingSquirrel;
 import animal.Tiger;
+import com.sun.xml.internal.ws.util.HandlerAnnotationInfo;
+import sun.security.krb5.internal.TicketFlags;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Noppharat on 7/12/2016.
@@ -13,7 +16,14 @@ public class Zoo {
     private String zooLocation;
     private String fees;
     private String officeHour;
+
     Map<String, Object> feesType = new HashMap<>();
+    List<Animals> animalsList = new ArrayList<>();
+
+    Tiger t1 = new Tiger();
+    Tiger t2 = new Tiger();
+    Giraffe g1 = new Giraffe();
+    SouthernFlyingSquirrel sq1 = new SouthernFlyingSquirrel();
 
     public String getZooName() {
         return zooName;
@@ -45,13 +55,9 @@ public class Zoo {
     }
 
     public void setFees() {
-        feesType.put("thai,adult","Thai adult : 100 Baht/person");
-        feesType.put("thai,university","Thai university : 50 Baht/person");
-        feesType.put("thai,student","Thai student 20 Baht/person");
-        feesType.put("thai,government","Thai government : 50 Baht/person");
-        feesType.put("thai,other","Thai elder, disable, monk : Free");
-        feesType.put("foreign,adult","Foreign adult : 150 Baht/person");
-        feesType.put("foreign,child","Foreign child : 70 Baht/person");
+        feesType.put("thai","Thai adult : 100 Baht/person\nThai university : 50 Baht/person\nThai student : 20 Baht/person\nThai government : 50 Baht/person\nThai elder, disable, monk : Free");
+        feesType.put("foreign","Foreign adult : 150 Baht/person\nForeign child : 70 Baht/person");
+        feesType.put("parking", "Motorcycle : 10 Baht\nCar : 50 Baht\nBus : 60 Baht");
     }
 
     public String getOfficeHour() {
@@ -68,6 +74,26 @@ public class Zoo {
         setOfficeHour("Open Daily : 8:00 AM - 06:00 PM");
         setFees();
         setZooType("Animal Theme Park");
+
+//       -----------------Set Animal Default---------------------
+
+        t1.setAnimalCode("t1");
+        t1.setAnimalGender("Male");
+
+        t2.setAnimalCode("t2");
+        t2.setAnimalGender("Female");
+
+        g1.setAnimalCode("g1");
+        g1.setAnimalGender("Male");
+
+        sq1.setAnimalCode("sq1");
+        sq1.setAnimalGender("Female");
+
+        animalsList.add(t1);
+        animalsList.add(t2);
+        animalsList.add(g1);
+        animalsList.add(sq1);
+
     }
 
     public String selectFeesRates(String nationality, String type){
@@ -78,10 +104,12 @@ public class Zoo {
 
     public void menu(){
         Scanner scan = new Scanner(System.in);
-        String command, nationality, type;
+        String command, type;
         System.out.println("Please enter the command");
         System.out.println(" - zooinfo : Get information of the zoo.");
         System.out.println(" - fees : Get fees rates.");
+        System.out.println(" - animal : Get animals information.");
+        System.out.println(" - exit : Terminate the program.");
         command = scan.next();
 
         if(command.equals("zooinfo")){
@@ -92,22 +120,31 @@ public class Zoo {
             System.out.println("----------------------------------");
             menu();
         }else if(command.equals("fees")){
-            System.out.println("Please enter you nationality,type. ex. thai,adult");
+            System.out.println("Please enter fees type.");
             System.out.println(" - thai : Thai nationality");
-            System.out.println("    - adult : Age more than 15.");
-            System.out.println("    - university : University ID card needed.");
-            System.out.println("    - student : Student ID card needed.");
-            System.out.println("    - government : Government ID card needed.");
-            System.out.println("    - other : Elder, Disable or Monk.");
             System.out.println(" - foreign : Other nationality");
-            System.out.println("    - adult : Age more than or equals to 15.");
-            System.out.println("    - child : Age less than 15.");
-            nationality = scan.next();
-            System.out.println(getFees(nationality));
-            System.out.println("------------------------------------");
+            System.out.println(" - parking : Parking fees");
+            type = scan.next();
+            if(type.equals("thai") || type.equals("foreign") || type.equals("parking")){
+                System.out.println(getFees(type));
+                System.out.println("------------------------------------");
+
+            }else{
+                System.out.println("Unknown command.");
+            }
+
             menu();
+        }else if (command.equals("animal")){
+            for(Animals anl : animalsList){
+                anl.showInfo();
+            }
+            menu();
+        }else if(command.equals("exit")){
+            System.out.println("Exit.");
+            System.exit(0);
         }else{
             System.out.println("You have enter the wrong command.");
+            menu();
         }
 
     }
@@ -116,10 +153,8 @@ public class Zoo {
 
         Zoo zoo = new Zoo();
         zoo.setDefault();
-        //zoo.menu();
+        zoo.menu();
 
-        Tiger t1 = new Tiger();
-        t1.eat();
 
     }
 

@@ -7,16 +7,25 @@ import food.Food;
  */
 public class Animals {
     private String animalCode;
-    private String animalName;
+    private String animalName;//Tiger, Lion, etc.
+    private String animalGender;
     private String animalType;//Mammals, Reptiles, Birds, Insects, Spider, Aquatic
     private String eatingType;//Carnivore, Herbivore, Omnivore
     private String BinomialName;
 
-    protected void setAnimalCode(String animalCode){
+    public String getAnimalGender() {
+        return animalGender;
+    }
+
+    public void setAnimalGender(String animalGender) {
+        this.animalGender = animalGender;
+    }
+
+    public void setAnimalCode(String animalCode){
         this.animalCode = animalCode;
     }
 
-    protected String getAnimalCode(){
+    public String getAnimalCode(){
         return animalCode;
     }
 
@@ -24,7 +33,7 @@ public class Animals {
         return animalName;
     }
 
-    public void setAnimalName(String animalName) {
+    protected void setAnimalName(String animalName) {
         this.animalName = animalName;
     }
 
@@ -32,7 +41,7 @@ public class Animals {
         return animalType;
     }
 
-    public void setAnimalType(String animalType) {
+    protected void setAnimalType(String animalType) {
         this.animalType = animalType;
     }
 
@@ -40,7 +49,7 @@ public class Animals {
         return eatingType;
     }
 
-    public void setEatingType(String eatingType) {
+    protected void setEatingType(String eatingType) {
         this.eatingType = eatingType;
     }
 
@@ -48,11 +57,24 @@ public class Animals {
         return BinomialName;
     }
 
-    public void setBinomialName(String binomialName) {
+    protected void setBinomialName(String binomialName) {
         BinomialName = binomialName;
     }
 
-    protected void eat(Food food){
+    public String eat(){
+        Food food = new Food();
+        return food.getFoodType(eatingType);
+    }
+
+    public void showInfo(){
+        System.out.println("Code : " + getAnimalCode());
+        System.out.println("Gender : " + getAnimalGender());
+        System.out.println("Name : " + getAnimalName());
+        System.out.println("Binomial name : " + getBinomialName());
+        System.out.println("Class : " + getAnimalType());
+        System.out.println("Order : " + getEatingType());
+        System.out.println(eat());
+        System.out.println("--------------------------------------");
 
     }
 

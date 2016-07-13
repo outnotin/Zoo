@@ -6,5 +6,5 @@ package building;
 public class Building {
     private String buildingZone;
     private String buildingName;
-
+    private String animalInside;
 }
